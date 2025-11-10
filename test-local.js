@@ -10,7 +10,7 @@ const clashBuilderPath = path.join(projectRoot, 'src', 'ClashConfigBuilder.js');
 const testCasesPath = path.join(projectRoot, 'test-cases.yaml');
 const i18nPath = path.join(projectRoot, 'src', 'i18n', 'index.js');
 
-console.log('🔧 修复模块导入路径:', baseConfigPath);
+console.log('修复模块导入路径:', baseConfigPath);
 
 let BaseConfigBuilder;
 let ClashConfigBuilder;
@@ -153,13 +153,13 @@ async function runTest(testCase) {
         return result.passed;
         
     } catch (error) {
-        console.error(`❌ 测试失败: ${error.message}`);
+        console.error(`测试失败: ${error.message}`);
         return false;
     }
 }
 
 async function runAllTests() {
-    console.log('🚀 开始本地测试 YAML 解析功能\n');
+    console.log('开始本地测试 YAML 解析功能\n');
     const cases = loadTestCases();
 
     let passedTests = 0;
@@ -170,13 +170,13 @@ async function runAllTests() {
         }
     }
     const totalTests = cases.length;
-    console.log(`\n🎯 测试完成!`);
-    console.log(`📊 结果: ${passedTests}/${totalTests} 测试通过`);
+    console.log(`\n测试完成!`);
+    console.log(`结果: ${passedTests}/${totalTests} 测试通过`);
     
     if (passedTests === totalTests) {
-        console.log('🎉 所有测试通过!YAML 解析功能工作正常!');
+        console.log('所有测试通过!YAML 解析功能工作正常!');
     } else {
-        console.log('⚠️  有测试失败，请检查实现');
+        console.log('有测试失败，请检查实现');
     }
 
     // 附加：构建级 Clash 配置输出测试（验证 proxy-groups 清理与去重）
@@ -186,13 +186,13 @@ async function runAllTests() {
 
 // 执行测试
 runAllTests().then(() => {
-    console.log('\n🏁 测试完成，可以安全部署了!');
+    console.log('\n测试完成，可以安全部署了!');
 }).catch(error => {
         console.error('测试执行失败:', error);
 });
 
 async function runClashOutputTest() {
-    console.log('\n🧪 追加测试: Clash 构建输出中的 proxy-groups 清理');
+    console.log('\n追加测试: Clash 构建输出中的 proxy-groups 清理');
     const input = `
 proxies:
   - name: Valid-SS
@@ -223,13 +223,13 @@ proxy-groups:
         const expected = ['DIRECT','REJECT','Valid-SS'];
         const actual = grp.proxies || [];
         const ok = JSON.stringify(actual) === JSON.stringify(expected);
-        console.log(`✅ 结果: ${ok ? '通过' : '失败'}`);
+        console.log(`结果: ${ok ? '通过' : '失败'}`);
         if (!ok) {
             console.log('   期望:', expected);
             console.log('   实际:', actual);
         }
     } catch (e) {
-        console.error('❌ Clash 构建输出测试失败:', e.message);
+        console.error('Clash 构建输出测试失败:', e.message);
     }
 }
 
@@ -275,10 +275,7 @@ vmess://ewogICJ2IjogIjIiLAogICJwcyI6ICJ0dzEubm9kZS5jb20iLAogICJhZGQiOiAidHcxLm5v
             messages.push('台湾分组验证失败 (预期 1 个节点, url-test 类型)');
         }
 
-        const manualName = t ? t('outboundNames.Manual Switch') : '🖐️ 手动切换';
-        const autoName = t ? t('outboundNames.Auto Select') : '⚡ 自动选择';
-        const nodeSelectLabel = t ? t('outboundNames.Node Select') : '🚀 节点选择';
-        const youtubeLabel = t ? t('outboundNames.Youtube') : '📹 油管视频';
+        const nodeSelectLabel = t ? t('outboundNames.select') : '节点选择';
 
         const manualGroup = (built['proxy-groups'] || []).find(g => g && g.name === manualName);
         if (!manualGroup || manualGroup.type !== 'select') {
@@ -322,7 +319,7 @@ vmess://ewogICJ2IjogIjIiLAogICJwcyI6ICJ0dzEubm9kZS5jb20iLAogICJhZGQiOiAidHcxLm5v
         }
 
     } catch (e) {
-        console.error('❌ 按国家分组测试失败:', e.message);
+        console.error('按国家分组测试失败:', e.message);
         console.error(e.stack);
     }
 }

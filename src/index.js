@@ -1,7 +1,5 @@
 import { SingboxConfigBuilder } from './SingboxConfigBuilder.js';
 import { generateHtml } from './htmlBuilder.js';
-import { ClashConfigBuilder } from './ClashConfigBuilder.js';
-import { SurgeConfigBuilder } from './SurgeConfigBuilder.js';
 import { encodeBase64, GenerateWebPath, tryDecodeSubscriptionLines } from './utils.js';
 import { PREDEFINED_RULE_SETS } from './config.js';
 import { t, setLanguage } from './i18n/index.js';
@@ -88,10 +86,6 @@ async function handleRequest(request) {
             : 'text/plain; charset=utf-8'
       };
 
-      // 如果是 Surge 配置，添加 subscription-userinfo 头
-      if (url.pathname.startsWith('/surge')) {
-        headers['subscription-userinfo'] = 'upload=0; download=0; total=10737418240; expire=2546249531';
-      }
 
       return new Response(
         url.pathname.startsWith('/singbox') ? JSON.stringify(config, null, 2) : config,
@@ -134,19 +128,15 @@ async function handleRequest(request) {
         headers: { 'Content-Type': 'text/plain' }
       });
 
-    } else if (url.pathname.startsWith('/b/') || url.pathname.startsWith('/c/') || url.pathname.startsWith('/x/') || url.pathname.startsWith('/s/')) {
+    } else if (url.pathname.startsWith('/b/') || url.pathname.startsWith('/x/')) {
       const shortCode = url.pathname.split('/')[2];
       const originalParam = await SUBLINK_KV.get(shortCode);
       let originalUrl;
 
       if (url.pathname.startsWith('/b/')) {
         originalUrl = `${url.origin}/singbox${originalParam}`;
-      } else if (url.pathname.startsWith('/c/')) {
-        originalUrl = `${url.origin}/clash${originalParam}`;
-      } else if (url.pathname.startsWith('/x/')) {
+      }else if (url.pathname.startsWith('/x/')) {
         originalUrl = `${url.origin}/xray${originalParam}`;
-      } else if (url.pathname.startsWith('/s/')) {
-        originalUrl = `${url.origin}/surge${originalParam}`;
       }
 
       if (originalUrl === null) {

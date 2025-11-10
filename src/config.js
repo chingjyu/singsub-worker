@@ -1,37 +1,21 @@
 import { t } from './i18n/index.js';
 
-export const SITE_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geosite/';
-export const IP_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://raw.githubusercontent.com/lyc8503/sing-box-rules/refs/heads/rule-set-geoip/';
-export const CLASH_SITE_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/';
-export const CLASH_IP_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geoip/';
-export const SURGE_SITE_RULE_SET_BASEURL = 'https://gh-proxy.com/https://github.com/NSZA156/surge-geox-rules/raw/refs/heads/release/geo/geosite/'
-export const SURGE_IP_RULE_SET_BASEURL = 'https://gh-proxy.com/https://github.com/NSZA156/surge-geox-rules/raw/refs/heads/release/geo/geoip/'
+export const SITE_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://raw.githubusercontent.com/1715173329/sing-geosite/refs/heads/rule-set/';
+export const IP_RULE_SET_BASE_URL = 'https://gh-proxy.com/https://raw.githubusercontent.com/1715173329/sing-geoip/refs/heads/rule-set/';
 // Custom rules
 export const CUSTOM_RULES = [];
 // Unified rule structure
 export const UNIFIED_RULES = [
 	{
-		name: 'Ad Block',
-		outbound: t('outboundNames.Ad Block'),
+		name: 'Ads',
+		outbound: t('outboundNames.Ads'),
 		site_rules: ['category-ads-all'],
 		ip_rules: []
 	},
 	{
-		name: 'AI Services',
-		outbound: t('outboundNames.AI Services'),
+		name: 'AI',
+		outbound: t('outboundNames.AI'),
 		site_rules: ['category-ai-!cn',],
-		ip_rules: []
-	},
-	{
-		name: 'Bilibili',
-		outbound: t('outboundNames.Bilibili'),
-		site_rules: ['bilibili'],
-		ip_rules: []
-	},
-	{
-		name: 'Youtube',
-		outbound: t('outboundNames.Youtube'),
-		site_rules: ['youtube'],
 		ip_rules: []
 	},
 	{
@@ -47,8 +31,8 @@ export const UNIFIED_RULES = [
 		ip_rules: ['private']
 	},
 	{
-		name: 'Location:CN',
-		outbound: t('outboundNames.Location:CN'),
+		name: 'China',
+		outbound: t('outboundNames.China'),
 		site_rules: ['geolocation-cn','cn'],
 		ip_rules: ['cn']
 	},
@@ -59,57 +43,9 @@ export const UNIFIED_RULES = [
 		ip_rules: ['telegram']
 	},
 	{
-		name: 'Github',
-		outbound: t('outboundNames.Github'),
-		site_rules: ['github', 'gitlab'],
-		ip_rules: []
-	},
-	{
-		name: 'Microsoft',
-		outbound: t('outboundNames.Microsoft'),
-		site_rules: ['microsoft'],
-		ip_rules: []
-	},
-	{
-		name: 'Apple',
+		name: 'Apple-CN',
 		outbound: t('outboundNames.Apple'),
-		site_rules: ['apple'],
-		ip_rules: []
-	},
-	{
-		name: 'Social Media',
-		outbound: t('outboundNames.Social Media'),
-		site_rules: ['facebook', 'instagram', 'twitter', 'tiktok', 'linkedin'],
-		ip_rules: []
-	},
-	{
-		name: 'Streaming',
-		outbound: t('outboundNames.Streaming'),
-		site_rules: ['netflix', 'hulu', 'disney', 'hbo', 'amazon','bahamut'],
-		ip_rules: []
-	},
-	{
-		name: 'Gaming',
-		outbound: t('outboundNames.Gaming'),
-		site_rules: ['steam', 'epicgames', 'ea', 'ubisoft', 'blizzard'],
-		ip_rules: []
-	},
-	{
-		name: 'Education',
-		outbound: t('outboundNames.Education'),
-		site_rules: ['coursera', 'edx', 'udemy', 'khanacademy', 'category-scholar-!cn'],
-		ip_rules: []
-	},
-	{
-		name: 'Financial',
-		outbound: t('outboundNames.Financial'),
-		site_rules: ['paypal', 'visa', 'mastercard','stripe','wise'],
-		ip_rules: []
-	},
-	{
-		name: 'Cloud Services',
-		outbound: t('outboundNames.Cloud Services'),
-		site_rules: ['aws', 'azure', 'digitalocean', 'heroku', 'dropbox'],
+		site_rules: ['apple@cn'],
 		ip_rules: []
 	},
 	{
@@ -117,12 +53,24 @@ export const UNIFIED_RULES = [
 		outbound: t('outboundNames.Non-China'),
 		site_rules: ['geolocation-!cn'],
 		ip_rules: []
+	},
+	{
+		name: 'Tencent',
+		outbound: t('outboundNames.Tencent'),
+		site_rules: ['tencent'],
+		ip_rules: []
+	},
+	{
+		name: 'Games-CN',
+		outbound: t('outboundNames.Games-CN'),
+		site_rules: ['category-games@cn'],
+		ip_rules: []
 	}
 ];
 
 export const PREDEFINED_RULE_SETS = {
-	minimal: ['Location:CN', 'Private', 'Non-China'],
-	balanced: ['Location:CN', 'Private', 'Non-China','Github', 'Google', 'Youtube', 'AI Services', 'Telegram'],
+	minimal: ['China', 'Private', 'Non-China'],
+	balanced: ['Private', 'Tencent', 'Games-CN', 'Apple-CN', 'Non-China', 'Google', 'AI', 'Telegram', 'China'],
 	comprehensive: UNIFIED_RULES.map(rule => rule.name)
   };
   
@@ -386,56 +334,62 @@ export const SING_BOX_CONFIG = {
 	dns: {
 		servers: [
 			{
-				type: "tcp",
-				tag: "dns_proxy",
+				type: "tls",
+				tag: "overseas",
 				server: "1.1.1.1",
-				detour: "🚀 节点选择",
-				domain_resolver: "dns_resolver"
+				detour: "select"
 			},
 			{
-				type: "https",
-				tag: "dns_direct",
-				server: "dns.alidns.com",
-				domain_resolver: "dns_resolver"
-			},
-			{
-				type: "udp",
-				tag: "dns_resolver",
+				type: "tls",
+				tag: "domestic",
 				server: "223.5.5.5"
 			},
-			{
-				type: "fakeip",
-				tag: "dns_fakeip",
-				inet4_range: "198.18.0.0/15",
-				inet6_range: "fc00::/18"
-			}
 		],
 		rules: [
 			{
-				rule_set: "geolocation-!cn",
-				query_type: [
-					"A",
-					"AAAA"
-				],
-				server: "dns_fakeip"
-			},
-			{
-				rule_set: "geolocation-!cn",
-				query_type: "CNAME",
-				server: "dns_proxy"
-			},
-			{
-				query_type: [
-					"A",
-					"AAAA",
-					"CNAME"
-				],
-				invert: true,
-				action: "predefined",
-				rcode: "REFUSED"
-			}
+                "action": "reject",
+                "query_type": "HTTPS"
+            },
+            {
+                "clash_mode": "direct",
+                "server": "domestic"
+            },
+            {
+                "clash_mode": "global",
+                "server": "overseas"
+            },
+            {
+                "action": "reject",
+                "rule_set": "geosite-category-ads-all"
+            },
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-apple@cn",
+                    "geosite-tencent"
+                ],
+                "server": "domestic"
+            },
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-google",
+                    "geosite-geolocation-!cn",
+                    "geosite-category-ai!cn"
+                ],
+                "server": "overseas"
+            },
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-category-games@cn",
+                    "geosite-tld-cn",
+                    "geosite-cn"
+                ],
+                "server": "domestic"
+            }
 		],
-		final: "dns_direct",
+		final: "overseas",
 		independent_cache: true
 	},
 	ntp: {
@@ -445,15 +399,15 @@ export const SING_BOX_CONFIG = {
 		interval: '30m'
 	},
 	inbounds: [
-		{ type: 'mixed', tag: 'mixed-in', listen: '0.0.0.0', listen_port: 2080 },
-		{ type: 'tun', tag: 'tun-in', address: '172.19.0.1/30', auto_route: true, strict_route: true, stack: 'mixed', sniff: true }
+		{ type: 'socks', tag: 'socks-in', listen: '::', listen_port: 1080 },
+		{ type: 'tun', tag: 'tun-in', address: ["172.19.0.1/30", "fdfe:dcba:9876::1/126"], auto_route: true, strict_route: true, stack: 'gvisor', "endpoint_independent_nat": true }
 	],
 	outbounds: [
 		{ type: 'block', tag: 'REJECT' },
 		{ type: "direct", tag: 'DIRECT' }
 	],
 	route : {
-		default_domain_resolver: "dns_resolver",
+		default_domain_resolver: "domestic",
 		"rule_set": [
             {
                 "tag": "geosite-geolocation-!cn",
@@ -467,86 +421,14 @@ export const SING_BOX_CONFIG = {
 	experimental: {
 		cache_file: {
 			enabled: true,
-			store_fakeip: true
-		}
-	}
-};
-
-export const CLASH_CONFIG = {
-    'port': 7890,
-    'socks-port': 7891,
-    'allow-lan': false,
-    'mode': 'rule',
-    'log-level': 'info',
-    'geodata-mode': true,
-    'geo-auto-update': true,
-    'geodata-loader': 'standard',
-    'geo-update-interval': 24,
-    'geox-url': {
-      'geoip': "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat",
-      'geosite': "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat",
-      'mmdb': "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb",
-      'asn': "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
-    },
-    'rule-providers': {
-      // 将由代码自动生成
-    },
-    'dns': {
-        'enable': true,
-        'ipv6': true,
-        'respect-rules': true,
-        'enhanced-mode': 'fake-ip',
-        'nameserver': [
-            'https://120.53.53.53/dns-query',
-            'https://223.5.5.5/dns-query'
-        ],
-        'proxy-server-nameserver': [
-            'https://120.53.53.53/dns-query',
-            'https://223.5.5.5/dns-query'
-        ],
-        'nameserver-policy': {
-            'geosite:cn,private': [
-                'https://120.53.53.53/dns-query',
-                'https://223.5.5.5/dns-query'
-            ],
-            'geosite:geolocation-!cn': [
-                'https://dns.cloudflare.com/dns-query',
-                'https://dns.google/dns-query'
-            ]
+			store_fakeip: false
+		},
+        "clash_api": {
+            "default_mode": "rule",
+            "external_controller": "127.0.0.1:9090",
+            "external_ui": "ui",
+            "external_ui_download_url": "https://gh-proxy.com/https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "secret": ""
         }
-    },
-    'proxies': [],
-    'proxy-groups': []
-};
-
-export const SURGE_CONFIG = {
-	'general': {
-        'allow-wifi-access': false,
-        'wifi-access-http-port': 6152,
-        'wifi-access-socks5-port': 6153,
-        'http-listen': '127.0.0.1:6152',
-        'socks5-listen': '127.0.0.1:6153',
-        'allow-hotspot-access': false,
-        'skip-proxy': '127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,100.64.0.0/10,17.0.0.0/8,localhost,*.local,*.crashlytics.com,seed-sequoia.siri.apple.com,sequoia.apple.com',
-        'test-timeout': 5,
-        'proxy-test-url': 'http://cp.cloudflare.com/generate_204',
-        'internet-test-url': 'http://www.apple.com/library/test/success.html',
-        'geoip-maxmind-url': 'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb',
-        'ipv6': false,
-        'show-error-page-for-reject': true,
-        'dns-server': '119.29.29.29, 180.184.1.1, 223.5.5.5, system',
-        'encrypted-dns-server': 'https://223.5.5.5/dns-query',
-        'exclude-simple-hostnames': true,
-        'read-etc-hosts': true,
-        'always-real-ip': '*.msftconnecttest.com, *.msftncsi.com, *.srv.nintendo.net, *.stun.playstation.net, xbox.*.microsoft.com, *.xboxlive.com, *.logon.battlenet.com.cn, *.logon.battle.net, stun.l.google.com, easy-login.10099.com.cn,*-update.xoyocdn.com, *.prod.cloud.netflix.com, appboot.netflix.com, *-appboot.netflix.com',
-        'hijack-dns': '*:53',
-        'udp-policy-not-supported-behaviour': 'REJECT',
-        'hide-vpn-icon': false,
-    },
-    'replica': {
-        'hide-apple-request': true,
-        'hide-crashlytics-request': true,
-        'use-keyword-filter': false,
-        'hide-udp': false
-    }
+	}
 };

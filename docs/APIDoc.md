@@ -1,8 +1,8 @@
-# Sublink Worker API 文档
+# singsub Worker API 文档
 
 ## 概述
 
-Sublink Worker 是一个部署在 Cloudflare Workers 上的轻量级订阅转换工具。它可以将各种代理协议的分享 URL 转换为不同客户端可用的订阅链接。本文档概述了 API 端点及其用法。
+singsub Worker 是一个部署在 Cloudflare Workers 上的轻量级订阅转换工具。它可以将各种代理协议的分享 URL 转换为不同客户端可用的订阅链接。本文档概述了 API 端点及其用法。
 
 ## 基础 URL
 
@@ -18,7 +18,7 @@ https://your-worker-domain.workers.dev
 
 ### 1. 生成配置
 
-#### Sing-Box 配置
+#### sing-sox 配置
 
 - **URL**: `/singbox`
 - **方法**: GET
@@ -34,11 +34,6 @@ https://your-worker-domain.workers.dev
 /singbox?config=vmess%3A%2F%2Fexample&selectedRules=balanced&customRules=%5B%7B%22site%22%3A%22example.com%22%2C%22ip%22%3A%22192.168.1.1%22%2C%22domain_suffix%22%3A%22.com%22%2C%22ip_cidr%22%3A%2210.0.0.0%2F8%22%2C%22name%22%3A%22MyCustomRule%22%7D%5D
 ```
 
-#### Clash 配置
-
-- **URL**: `/clash`
-- **方法**: GET
-- **参数**: 与 Sing-Box 配置相同
 
 #### Xray 配置
 
@@ -81,7 +76,7 @@ https://your-worker-domain.workers.dev
 
   ```json
   {
-    "type": "clash" | "singbox",  // 配置类型
+    "type": "singbox",  // 配置类型
     "content": "配置内容"  // 字符串格式的配置内容
   }
   ```
@@ -174,7 +169,7 @@ Singbox 的规则集来自 [https://github.com/lyc8503/sing-box-rules](https://g
     "domain_keyword": "Mijia Cloud,push.apple",
     "ip_cidr": "192.168.0.0/16,10.0.0.0/8",
     "protocol": "http,tls,dns",
-    "name": "🤪 MyCustomRule"
+    "name": "MyCustomRule"
   }
 ]
 ```
@@ -202,16 +197,12 @@ API 在出现问题时将返回适当的 HTTP 状态码和错误消息:
    /singbox?config=vmess%3A%2F%2Fexample&selectedRules=balanced
    ```
 
-2. 生成带有置顶自定义规则的 Clash 配置:
-   ```
-   /clash?config=vless%3A%2F%2Fexample&customRules=%5B%7B%22site%22%3A%22example.com%22%2C%22ip%22%3A%22192.168.1.1%22%2C%22domain_suffix%22%3A%22.com%22%2C%22domain_keyword%22%3A%22Mijia%20Cloud%22%2C%22ip_cidr%22%3A%2210.0.0.0%2F8%22%2C%22name%22%3A%22MyCustomRule%22%7D%5D&pin=true
-   ```
 
-3. 缩短 URL:
+2. 缩短 URL:
    ```
    /shorten?url=https%3A%2F%2Fyour-worker-domain.workers.dev%2Fsingbox%3Fconfig%3Dvmess%253A%252F%252Fexample%26selectedRules%3Dbalanced
    ```
 
 ## 结论
 
-Sublink Worker API 提供了一种灵活而强大的方式来生成和管理代理配置。它支持多种代理协议、各种客户端类型和可自定义的路由规则。URL 缩短功能允许轻松共享和管理复杂的配置。
+singsub Worker API 提供了一种灵活而强大的方式来生成和管理代理配置。它支持多种代理协议、各种客户端类型和可自定义的路由规则。URL 缩短功能允许轻松共享和管理复杂的配置。

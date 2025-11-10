@@ -1,15 +1,5 @@
 <div align="center">
-  <h1><b>Sublink Worker</b></h1>
-  <h5><i>Serverless 自部署订阅转换工具最佳实践</i></h5>
-  
-  <a href="https://trendshift.io/repositories/12291" target="_blank">
-    <img src="https://trendshift.io/api/badge/repositories/12291" alt="7Sageer%2Fsublink-worker | Trendshift" width="250" height="55"/>
-  </a>
-  
-  <!-- <p>
-    <a href="https://sublink-worker.sageer.me">https://sublink-worker.sageer.me</a>
-  </p> -->
-  <br>
+  <h1><b>singsub Worker</b></h1>
 
   <p>
     <a href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/create">
@@ -48,7 +38,6 @@ npm run deploy
 
 ### 客户端支持
 - Sing-Box
-- Clash
 - Xray/V2Ray
 
 ### Web 界面特性
@@ -62,7 +51,6 @@ npm run deploy
 
 ### 主要端点
 - `/singbox` - 生成 Sing-Box 配置
-- `/clash` - 生成 Clash 配置
 - `/xray` - 生成 Xray 配置
 - `/shorten` - 生成短链接
 
@@ -93,10 +81,6 @@ npm run deploy
     └── BaseConfig.md      # 基础配置功能介绍
 ```
 
-## 🤝 贡献
-
-欢迎提交 Issues 和 Pull Requests 来改进这个项目。
-
 ## 📄 许可证
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
@@ -104,37 +88,3 @@ npm run deploy
 ## ⚠️ 免责声明
 
 本项目仅供学习交流使用，请勿用于非法用途。使用本项目所造成的一切后果由使用者自行承担，与开发者无关。
-
-## 💰 赞助
-
-<div align="center">
-  <h3>感谢以下赞助商对本项目的支持</h3>
-<table border="0">
-  <tr>
-    <td>
-      <a href="https://yxvm.com/" target="_blank" title="YXVM">
-        <img src="https://image.779477.xyz/yxvm.png" alt="YXVM" height="60" hspace="20"/>
-      </a>
-    </td>
-    <td>
-      <a href="https://github.com/NodeSeekDev/NodeSupport" target="_blank" title="NodeSupport">
-        <img src="https://image.779477.xyz/ns.png" alt="NodeSupport" height="60" hspace="20"/>
-      </a>
-    </td>
-  </tr>
-</table>
-  <p><b>NodeSupport赞助了本项目，感谢他们的支持！</b></p>
-  <p>如果您想赞助本项目，请联系开发者 <a href="https://github.com/7Sageer" style="text-decoration: none;">@7Sageer</a></p>
-</div>
-
-## ⭐ Star History
-
-感谢所有为本项目点亮 Star 的朋友们！🌟
-
-<a href="https://star-history.com/#7Sageer/sublink-worker&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=7Sageer/sublink-worker&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=7Sageer/sublink-worker&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=7Sageer/sublink-worker&type=Date" />
- </picture>
-</a> 

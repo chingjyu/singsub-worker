@@ -8,7 +8,7 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
         if (baseConfig === undefined) {
             baseConfig = SING_BOX_CONFIG;
             if (baseConfig.dns && baseConfig.dns.servers) {
-                baseConfig.dns.servers[0].detour = t('outboundNames.Node Select');
+                baseConfig.dns.servers[0].detour = t('outboundNames.select');
             }
         }
         super(inputString, baseConfig, lang, userAgent, groupByCountry);
@@ -54,19 +54,12 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
         this.config.outbounds.push(proxy);
     }
 
-    addAutoSelectGroup(proxyList) {
-        this.config.outbounds.unshift({
-            type: "urltest",
-            tag: t('outboundNames.Auto Select'),
-            outbounds: DeepCopy(proxyList),
-        });
-    }
 
     addNodeSelectGroup(proxyList) {
-        proxyList.unshift('DIRECT', 'REJECT', t('outboundNames.Auto Select'));
+        proxyList.unshift('DIRECT', 'REJECT');
         this.config.outbounds.unshift({
             type: "selector",
-            tag: t('outboundNames.Node Select'),
+            tag: t('outboundNames.select'),
             outbounds: proxyList
         });
     }
@@ -75,13 +68,12 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
         const normalize = (s) => typeof s === 'string' ? s.trim() : s;
         const base = this.groupByCountry
             ? [
-                t('outboundNames.Node Select'),
-                t('outboundNames.Auto Select'),
+                t('outboundNames.select'),
                 ...(this.manualGroupName ? [this.manualGroupName] : []),
                 ...(this.countryGroupNames || [])
               ]
             : [
-                t('outboundNames.Node Select'),
+                t('outboundNames.select'),
                 ...proxyList
               ];
         const combined = ['DIRECT', 'REJECT', ...base].filter(Boolean);
@@ -96,7 +88,7 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
 
     addOutboundGroups(outbounds, proxyList) {
         outbounds.forEach(outbound => {
-            if (outbound !== t('outboundNames.Node Select')) {
+            if (outbound !== t('outboundNames.select')) {
                 const selectorMembers = this.buildSelectorMembers(proxyList);
                 this.config.outbounds.push({
                     type: "selector",
@@ -118,15 +110,6 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
                 });
             });
         }
-    }
-
-    addFallBackGroup(proxyList) {
-        const selectorMembers = this.buildSelectorMembers(proxyList);
-        this.config.outbounds.push({
-            type: "selector",
-            tag: t('outboundNames.Fall Back'),
-            outbounds: selectorMembers
-        });
     }
 
     addCountryGroups() {
@@ -182,7 +165,7 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
             countryGroupNames.push(groupName);
         });
 
-        const nodeSelectTag = t('outboundNames.Node Select');
+        const nodeSelectTag = t('outboundNames.select');
         const nodeSelectGroup = this.config.outbounds.find(o => normalize(o?.tag) === normalize(nodeSelectTag));
         if (nodeSelectGroup && Array.isArray(nodeSelectGroup.outbounds)) {
             const seen = new Set();
@@ -249,13 +232,13 @@ export class SingboxConfigBuilder extends BaseConfigBuilder {
 
         this.config.route.rules.unshift(
             { clash_mode: 'direct', outbound: 'DIRECT' },
-            { clash_mode: 'global', outbound: t('outboundNames.Node Select') },
+            { clash_mode: 'global', outbound: t('outboundNames.select') },
             { action: 'sniff' },
             { protocol: 'dns', action: 'hijack-dns' }
         );
 
         this.config.route.auto_detect_interface = true;
-        this.config.route.final = t('outboundNames.Fall Back');
+        this.config.route.final = t('outboundNames.select');
 
         return this.config;
     }
